@@ -1,0 +1,69 @@
+<div class="userContainer" style="display: grid;">
+    <button (click)="toggleTop()"  class="btn btn-primary" style="max-width: 120px;">add user <i [ngClass]="!toggleTopp ? 'fas fa-plus-circle': 'fas fa-minus-square'" ></i></button>
+
+    <div *ngIf="toggleTopp"   class="card card-body mb-3">
+        <form (submit)="onSubmit($event)">
+            <div class="form-group">
+                <label >First name:  </label>
+                <input  [(ngModel)]="user.firstName" 
+                type="text" minlength="5"
+                [ngClass]="user.firstName.length>5 ? 
+                'form-control' : 'form-control is-invalid'"  name="firstName">
+                <div [hidden]='user.firstName.length>5' class="invalid-feedback">required</div>
+                <label >Last name:  </label>
+                <input [(ngModel)]="user.lastName" type="text" class="form-control" name="lastName">
+                <label >Age:  </label>
+                <input [(ngModel)]="user.age"  type="number" class="form-control" name="age">
+                <label >City:  </label>
+                <input  [(ngModel)]="user.address.city"  type="text" class="form-control" name="city">
+                <label >Country:  </label>
+                <input  [(ngModel)]="user.address.country"  type="email" class="form-control" name="country">
+            </div>
+            <button [disabled]="user.firstName.length < 5 || user.lastName.length < 5" 
+            (click)="addUser()" style="min-width: 160px;" [ngClass]="currentClass"  class="btn btn-info mb-3">Add user</button>
+        </form>
+    </div>
+
+
+
+          
+            <h1>Users here << </h1>
+            <ul class="list-unstyled">
+
+                <li class="card card-body mb-2" *ngFor="let user of users" [class.bg-primary]="user.isActive"
+                    [style.border]="user.isActive ? 'green 2px solid' : 'red 2px solid'">
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="col-sm-8">
+                                <h3 [ngStyle]="currentStyle">{{user.firstName}} {{user.lastName}} </h3>
+                           
+                            </div>
+                        </div>
+                        <small><button class="btn btn-secondary" (click)="toggleHide(user)" style="margin: 5px;"><i
+                                  [ngClass]="!user.hide ? 'fas fa-plus-square' : 'fas fa-minus-square'"></i></button></small>
+                        <ul *ngIf="user.hide" class="list-group">
+                            <img style="max-width: 80px;" class="img-fluid" [src]="user.image" alt="aaa">
+                            <li class="list-group-item">Age: {{user.age}}</li>
+                            <li class="list-group-item"> address: {{ user.address.street}} {{user.address.city}}
+                                {{user.address.country}}</li>
+                            <li *ngIf="user.balance" class="list-group-item">
+                                Balance: {{user.balance | currency}}
+                            </li>
+                            <li *ngIf="user.register" class="list-group-item">
+                                Balance: {{user.register | date}}
+                            </li>
+                        </ul>
+                    </div>
+
+
+
+
+
+                </li>
+
+            </ul>
+
+            <!-- <ng-template #noUsers>no found</ng-template> -->
+            <h2 *ngIf="users.length == 0">No one found </h2>
+</div>

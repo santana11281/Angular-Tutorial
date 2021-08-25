@@ -1,0 +1,30 @@
+<div class="userContainer" style="display: grid;">
+<h1>Users here << </h1>
+<button [ngClass]="currentClass"  [disabled]="!enableAdd"  class="btn btn-block mb-3">Add user</button>
+<ul   class="list-unstyled">
+
+<li  class="card card-body mb-2" *ngFor="let user of users" [class.bg-dark]="user.isActive"> 
+
+<div   class="row" >
+    <div class="col-sm-4">
+        <div class="col-sm-8">
+            <h3>{{user.firstName}} {{user.lastName}}  </h3> 
+            <img  class="img-fluid" [src]="user.image" alt="aaa" >
+        </div>
+    </div>
+</div>
+    
+
+<ul   class="list-group">
+<li class="list-group-item">Age: {{user.age}}</li>
+<li class="list-group-item"> address: {{ user.address.street}} {{user.address.city}} {{user.address.country}}</li>
+</ul>
+
+
+</li>
+
+</ul>
+
+<!-- <ng-template #noUsers>no found</ng-template> -->
+<h2 *ngIf="users.length == 0">No one found </h2>
+</div>
